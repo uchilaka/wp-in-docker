@@ -9,6 +9,13 @@ git add -A
 git commit -m "initial commit for public code"
 # push code, also binding the master branch to the origin tree
 git push -u origin master
+# now, create a remote tree to track dev or private code
+git remote add private https://bitbucket.org/uchilaka_/docker-wp-mysql
+# create a new local branch, in the same local repo, to track changes for this repository
+git checkout -b uc-wordpress
+git add -A
+git commit -m "tracking local changes for uc-wordpress"
+git push -u private uc-wordpress
 ```
 
 # Wordpress Container for Docker

@@ -1,17 +1,6 @@
 version: '2'
 
 services:
-  # rescue_db:
-  #   container_name: wp-mysql-rescue
-  #   ports:
-  #     - 8090:3306
-  #   image: mysql/mysql-server:5.7
-  #   restart: unless-stopped
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: Spl3sh27?
-  #   volumes:
-  #     - ./data/db/mysql:/var/lib/mysql
-  #     - ./conf.d:/etc/mysql/conf.d
 
   db:
     container_name: wp-mysql
@@ -23,9 +12,9 @@ services:
       MYSQL_DATABASE: uc-wordpress
       MYSQL_ROOT_PASSWORD: Spl3sh27?
     volumes:
-      # - ./data/db/mysql-dev:/var/lib/mysql
       - ./data/db/mysql:/var/lib/mysql
       - ./conf.d:/etc/mysql/conf.d
+    # you can even get as specific as assigning IP addresses within the virutal network spun up by the Docker Engine to run your containers
     # networks:
     #   vmnet:
     #     ipv4_address: 4.11.0.3
