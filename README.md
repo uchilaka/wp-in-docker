@@ -73,3 +73,6 @@ Complete the following steps to deploy your Wordpress site.
 - run `docker-compose start`. This will re-launch your containers, without hooking you up to the standard output
 - run `docker exec -it {wordpress_container_name} bash` to connect to the bash terminal for your wordpress container
 - Inside your wordpress web container terminal, run `mysql -u root -p`. This will prompt you for the mysql password you set in your app
+- Complete the steps above under **Setup for Remote Access** within the mysql console
+- Exit both the mysql console and the bash terminal
+- run `docker-compose restart`
