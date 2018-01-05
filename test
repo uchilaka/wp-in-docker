@@ -1,0 +1,8 @@
+#!/bin/bash
+DATAPATH=$(PWD)/data/mysql_$(date "+%Y%m%d_%H%m")
+LOGFILE=$(PWD)/logs/$(date "+%Y%m%d_%H00").txt 
+#logger -s "Will persist data for new Docker container to $DATAPATH..." 2>> $LOGFILE
+if ! [ -d $DATAPATH ]; then
+    logger -s "Creating $DATAPATH" 2>> $LOGFILE
+    mkdir -p $DATAPATH
+fi

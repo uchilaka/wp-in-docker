@@ -1,0 +1,7 @@
+## Definition of private/vars.conf file
+#WP_CONTAINER_NAME="{CONTAINER_NAME}"
+#WP_MYSQL_HOST="{DB_HOST}" 
+#WP_MYSQL_DB="{DB_NAME}"
+#WP_MYSQL_USER="{DB_USER}"
+#WP_MYSQL_PWD="{DB_PW}"
+#

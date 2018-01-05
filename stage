@@ -1,0 +1,21 @@
+#!/bin/bash
+#DATAPATH=/opt/docker/data/wp_$(date "+%Y%m%d_%H%M")
+#DATAPATH=$(PWD)/data/wp_content_stg_$(date "+%Y%m%d_%H%M")
+DATAPATH=$(pwd)/data/wordpress
+LOGFILE=$(pwd)/logs/$(date "+%Y%m%d_%H00").txt 
+if ! [ -d $DATAPATH ]; then
+    logger -s "Creating $DATAPATH" 2>> $LOGFILE
+    mkdir -p $DATAPATH
+else
+    echo "Found data directory: $DATAPATH"
+fi
+# log location for current container
+logger -s "Will persist (latest) container app data @ $DATAPATH..." 2>> $LOGFILE
+
+docker run --name wordpress-stg \
+--link wp-mysql-stg:mysql \
+-v $DATAPATH/www:/var/www/html \
+-e WORDPRESS_DB_NAME=wordpress-dev \
+-p 7300:80 \
+--restart unless-stopped \
+-d uchilaka/wordpress:dev

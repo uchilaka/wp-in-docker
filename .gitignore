@@ -1,0 +1,16 @@
+node_modules
+# uncomment data to backup entire database
+data/mysql 
+data/mysql-dev
+data/wordpress
+data/wordpress-dev
+#!data/wordpress/wp-content/README
+#!data/wordpress/www/README
+
+private/*
+!private/README
+
+logs/*
+!logs/README
+
+.vscode/*

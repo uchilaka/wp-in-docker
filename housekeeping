@@ -1,0 +1,101 @@
+#!/bin/bash
+DTSP=$(date "+%Y-%m-%d__%H-%M")
+CLIST=""
+export TMP=./tmp
+# # make temporary directory if not exists
+! [[ -d $TMP ]] && mkdir -p $TMP
+
+# make processing file 
+VARF=$TMP/docker_trash_containers_$DTSP
+
+echo "Variable file (Containers): $VARF"
+
+# this worked!
+#MATCH_STRING="Exited (0) .* week"
+MATCH_STRING="Exited .* ago"
+# this worked!
+#EXTRACT_REGEX="^\([a-z0-9]*\)"
+EXTRACT_REGEX="^\([a-zA-Z0-9]*\)[[:space:]]*"
+docker ps -a | grep "$MATCH_STRING" | while read LINE; do 
+    CID=$( echo `expr "$LINE" : $EXTRACT_REGEX` | tr -d '\r' ) 
+    if ! [ -z $CID ]; then
+        echo $CID >> $VARF
+    fi
+done;
+
+if [[ -f $VARF ]]; then 
+    # Build CLIST 
+    N=0
+    while read LINE; do 
+        echo New line: $LINE
+        CLIST+="$LINE "
+        N=$((N + 1))
+    done < $VARF
+fi
+
+# show list
+echo "Container(s) List: $CLIST"
+
+if ! [[ -z $CLIST ]]; then
+    # run docker cleanup
+    echo "$N Docker container(s) found for cleanup. Working..."
+    docker rm $CLIST
+else 
+    # no trash
+    echo "No Docker containers found for cleanup. Exiting"
+fi
+
+# Remove variable file (containers)
+[[ -d $VARF ]] && rm -v $VARF
+
+# Clear list 
+export CLIST=""
+
+# make processing file (images)
+VARF=$TMP/docker_trash_images_$DTSP
+
+echo "Variable file (Images): $VARF"
+
+# docker ps -a | grep "Exited (0) .* week" | while read LINE; do 
+#     CID=$( echo `expr "$LINE" : '^\([a-z0-9]*\)'` | tr -d '\r' ) 
+#     if ! [ -z $CID ]; then
+#         echo $CID >> $VARF
+#     fi
+# done;
+
+MATCH_STRING="<none>[[:space:]]*<none>"
+EXTRACT_REGEX="^<none>[[:space:]]*<none>[[:space:]]*\([a-zA-Z0-9]*\)"
+docker images | grep $MATCH_STRING | while read LINE; do 
+    echo "Found line > $LINE"
+    # this worked!
+    #IID=$( echo `expr "$LINE" : '^<none>[[:space:]]*<none>[[:space:]]*\([a-zA-Z0-9]*\)'` | tr -d '\r' )
+    IID=$( echo `expr "$LINE" : $EXTRACT_REGEX` | tr -d '\r' )
+    if ! [[ -z $IID ]]; then
+        echo $IID >> $VARF
+    fi
+done;
+
+if [[ -f $VARF ]]; then 
+    # Build CLIST 
+    N=0
+    while read LINE; do 
+        echo New line: $LINE
+        CLIST+="$LINE "
+        N=$((N + 1))
+    done < $VARF
+fi
+
+# show list
+echo "Image(s) List: $CLIST"
+
+if ! [[ -z $CLIST ]]; then
+    # run docker cleanup
+    echo "$N Docker image(s) found for cleanup. Working..."
+    docker rmi $CLIST
+else 
+    # no trash
+    echo "No Docker image(s) found for cleanup. Exiting"
+fi
+
+# Remove variable file 
+[[ -d $VARF ]] && rm -v $VARF

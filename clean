@@ -1,0 +1,3 @@
+#!/bin/bash
+docker stop wordpress-stg 
+docker rm wordpress-stg

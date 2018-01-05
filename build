@@ -1,0 +1,3 @@
+#!/bin/bash
+# @IMPORTANT this script MUST be run from the project root directory
+docker build -t uchilaka/wordpress:dev . "$@"
