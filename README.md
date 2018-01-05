@@ -40,7 +40,13 @@ Notes on the MySQL container as configured in `docker-compose.yaml`.
 - Documentation on options files, in our case `./conf.d/my.cnf` can be found here: [https://dev.mysql.com/doc/refman/5.7/en/option-files.html]()
 
 ## Setup for Remote Access
-In addition to the configuration entry for `bind-address` (see `./conf.d/my.cnf`) you also need to create a user with global privileges:
+In addition to the configuration entry for `bind-address` (see `./conf.d/my.cnf`) you also need to create a user with global privileges. To complete this task, you will need to access the `bash` terminal for your container:
+```
+docker exec -it <mysql-container-name> bash
+```
+You can obtain the `mysql-container-name` from the `docker-compose ps` command, running in your app directory, or your `docker-compose.yaml` script, or from `container_name` under the `db` service configuration. 
+
+Then, run the following mysql commands (with appropriate substitutions for username and passphrase):
 ```
 mysql> create user 'crud'@'%' identified by 'Y0urP3ssw0rd';
 Query OK, 0 rows affected (0.04 sec)
@@ -50,10 +56,6 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> FLUSH PRIVILEGES;
 Query OK, 0 rows affected (0.01 sec)
-```
-You can access your container to complete this task by running the following command on your docker engine host:
-```
-docker exec -it <mysql-container-name> bash
 ```
 
 ## Timezone Settings
