@@ -61,13 +61,15 @@ Query OK, 0 rows affected (0.01 sec)
 ## Timezone Settings
 Complete more research for how to install timezone tables from resource files at this URL: [https://dev.mysql.com/downloads/timezones.html](). Files for `5.7` have been downloaded to `./res/timezone_2017c_leaps_sql.zip` (NON-POSIX, with leap seconds).
 
-## Setup
-- Create the following directory relative to the root of the project: `./data/mysql`
-- Make sure you create the following file relative to the root directory of the project: `./private/vars.conf`
-- In the `vars.conf` file above, input the following code:
+# Setup Steps
+Complete the following steps to deploy your Wordpress site.
 
-```
-MYSQL_PW="{your_mysql_root_password}"
-```
-- **FYI** if your data directory in deployment already contains mysql files, those files will NOT be replaced (I believe this to be true as @ last check of the Docker source documentation for the docker repo src we are using)
+## Initialize your containers
+- run `docker-compose build --no-cache`. This will build your containers
+- run `docker-compose up`. This will output to STDOUT. Observe the logs until there are not additional outputs from the database server. You will continue to get outputs from the web server indicating a failure to connect to the database - don't worry, you'll fix that in the next step
+- enter `Ctrl + C` to exit the STDOUT feed.
 
+## Setup your Database user 
+- run `docker-compose start`. This will re-launch your containers, without hooking you up to the standard output
+- run `docker exec -it {wordpress_container_name} bash` to connect to the bash terminal for your wordpress container
+- Inside your wordpress web container terminal, run `mysql -u root -p`. This will prompt you for the mysql password you set in your app
