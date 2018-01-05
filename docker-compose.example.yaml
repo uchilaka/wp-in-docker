@@ -14,6 +14,8 @@ services:
     volumes:
       - ./data/db/mysql:/var/lib/mysql
       - ./conf.d:/etc/mysql/conf.d
+    # NOTE ON NETWORKING
+    # be aware that network subnets can either be maintained outside of your compose script, or within - but if within, will need to NOT co-incide with other compose scripts deploying to the same docker engine
     # you can even get as specific as assigning IP addresses within the virutal network spun up by the Docker Engine to run your containers
     # networks:
     #   vmnet:
