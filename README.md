@@ -4,18 +4,21 @@ I've implemented instructions here first found on [https://24ways.org/2013/keepi
 # Create a new (remote) github repo
 # Add origin of new repo for public code
 git init
-git remote add origin https://bitbucket.org/uchilaka_/wp-in-docker
+git remote add public https://bitbucket.org/uchilaka_/wp-in-docker
 git add -A
 git commit -m "initial commit for public code"
 # push code, also binding the master branch to the origin tree
-git push -u origin master
+git push -u public master
 # now, create a remote tree to track dev or private code
 git remote add private https://bitbucket.org/uchilaka_/docker-wp-mysql
 # create a new local branch, in the same local repo, to track changes for this repository
-git checkout -b uc-wordpress
+git checkout -b dev
 git add -A
 git commit -m "tracking local changes for uc-wordpress"
-git push -u private uc-wordpress
+git push -u private dev
+# manually add the docker-compose file
+cp docker-compose.example.yaml docker-compose.yaml
+git add -f docker-compose.yaml
 ```
 
 # Wordpress Container for Docker
