@@ -1,9 +1,6 @@
 node_modules
 # uncomment data to backup entire database
-data/db/mysql 
-data/db/mysql-dev
-data/wordpress
-data/wordpress-dev
+data
 #!data/wordpress/wp-content/README
 #!data/wordpress/www/README
 
