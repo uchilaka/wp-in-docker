@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: uc-wordpress
-      MYSQL_ROOT_PASSWORD: Spl3sh27?
+      MYSQL_ROOT_PASSWORD: y0ur-password
     volumes:
       - ./data/db/mysql:/var/lib/mysql
       - ./conf.d:/etc/mysql/conf.d
@@ -24,9 +24,9 @@ services:
     environment:
       WORDPRESS_DB_NAME: uc-wordpress
       WORDPRESS_DB_HOST: db:3306
-      # create these credentials manually after the initialization of the database i.e. 'crud'@'%'
+      # create these credentials manually after the initialization of the database i.e. 'crud'@'%' via `docker exec...`
       WORDPRESS_DB_USER: crud
-      WORDPRESS_DB_PASSWORD: Spl3sh27?
+      WORDPRESS_DB_PASSWORD: an0ther-password
     ports:
       - 7310:80
     restart: unless-stopped
