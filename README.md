@@ -3,6 +3,7 @@ I've implemented instructions here first found on [https://24ways.org/2013/keepi
 ```
 # Create a new (remote) github repo
 # Add origin of new repo for public code
+# IMPORTANT make sure .gitignore includes docker-compose.yaml - this will allow you to manually add the config script in whatever branch you want to track it
 git init
 git remote add public https://bitbucket.org/uchilaka_/wp-in-docker
 git add -A
